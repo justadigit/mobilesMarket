@@ -2,6 +2,22 @@
 
 const Product = require('../../models/Product');
 
+const index = (req, res) => {
+  Product.find()
+    .populate('categoryId')
+    .sort({ createdAt: -1 })
+    .then((data) => {
+      if (data.length > 0) {
+        res.status(200).json(data);
+      } else {
+        res.status(200).json({ Messge: 'No Data Yet' });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+};
+
 const post_product = async (req, res) => {
   const name = await req.body.name;
   const price = await req.body.price;
@@ -32,5 +48,6 @@ const post_product = async (req, res) => {
     });
 };
 module.exports = {
+  index,
   post_product,
 };

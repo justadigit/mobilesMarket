@@ -30,6 +30,7 @@ let cpUpload = upload.fields([
   { name: 'relatedImage', maxCount: 3 },
 ]);
 
+router.get('/', productControlleer.index);
 router.post('/', cpUpload, productControlleer.post_product);
 
 module.exports = router;
