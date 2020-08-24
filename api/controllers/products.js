@@ -18,6 +18,44 @@ const index = (req, res) => {
     });
 };
 
+const detail = (req, res) => {
+  const id = req.params.id;
+  Product.findById(id)
+    .populate('categoryId')
+    .then((productdata) => {
+      Product.find()
+        .populate('categoryId')
+        .select('_id name price image relatedImage specification')
+        .then((datas) => {
+          let related = datas.filter((item) => {
+            // console.log(typeof item._id , item._id);
+            // console.log(typeof productdata._id , productdata._id);
+            // console.log(Object.is(item._id.toString(),productdata._id.toString()));
+            return (
+              item._id.toString() !== productdata._id.toString() &&
+              item.categoryId.name == productdata.categoryId.name
+            );
+          });
+
+          res.status(200).json({
+            product: {
+              id: productdata._id,
+              name: productdata.name,
+              image: productdata.image,
+              price: productdata.pirce,
+              specification: productdata.specification,
+              relatedImage: productdata.relatedImage,
+              type: productdata.categoryId.name,
+            },
+            relatedproducts: related,
+          });
+        });
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+};
+
 const post_product = async (req, res) => {
   const name = await req.body.name;
   const price = await req.body.price;
@@ -49,5 +87,6 @@ const post_product = async (req, res) => {
 };
 module.exports = {
   index,
+  detail,
   post_product,
 };

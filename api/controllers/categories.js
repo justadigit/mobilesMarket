@@ -22,9 +22,9 @@ const detail = (req, res, next) => {
     .then((getdata) => {
       if (getdata.length > 0) {
         Product.find({ categoryId: getdata[0]._id })
-          .then((news) => {
-            if (news.length > 0) {
-              res.status(200).json(news);
+          .then((products) => {
+            if (products.length > 0) {
+              res.status(200).json(products);
             } else {
               res.status(404).json('No Data for This!');
             }

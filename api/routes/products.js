@@ -31,6 +31,7 @@ let cpUpload = upload.fields([
 ]);
 
 router.get('/', productControlleer.index);
+router.get('/:id', productControlleer.detail);
 router.post('/', cpUpload, productControlleer.post_product);
 
 module.exports = router;
