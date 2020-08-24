@@ -42,7 +42,7 @@ const detail = (req, res) => {
               id: productdata._id,
               name: productdata.name,
               image: productdata.image,
-              price: productdata.pirce,
+              price: productdata.price,
               specification: productdata.specification,
               relatedImage: productdata.relatedImage,
               type: productdata.categoryId.name,
